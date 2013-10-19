@@ -1,27 +1,26 @@
-Integrating tests with the Bamboo Sauce OnDemand plugin
+Integrating tests with the TeamCity Sauce OnDemand plugin
 =============
 
-To run the tests, go the Bamboo dashboard. The plan wasn't enabled when we it was created, so click the `Enable plan` image.
+To run the tests, go the TeamCity dashboard. Click the `Run` button.
 
-![Enable plan](##enable-plan.png##)
-
-Once the plan has been enabled, click the `Run` image.
-
-![Run plan](##run-plan.png##)
+![Run build](##run-build.png##)
 
 This should compile and run three tests.
 
-Once the build has finished, navigate to the `Sauce Jobs` tab.
 
-![Sauce Jobs](##sauce-jobs-tab.png##)
+****
+
+Once the build has finished, click on the build results link and navigate to the `Sauce Labs Results` tab.
+
+![Build Results](##build-results.png##)
 
 Clicking on one of the links will present a page containing the Sauce report, which will allow you to view the steps performed and watch a video of the test.
 
 ![Sauce Report](##sauce-report.png##)
 
-That's it, we've successfully configured Bamboo to run our tests against Sauce OnDemand!
+That's it, we've successfully configured TeamCity to run our tests against Sauce Labs!
 
-To summarise, in order to make the most use out of the Sauce Bamboo plugin, the following steps should be performed:
+To summarise, in order to make the most use out of the Sauce TeamCity plugin, the following steps should be performed:
 
 * Update tests to reference the environment variables set by the plugin
 * Output the Sauce session id to the stdout to allow the Sauce plugin to associate test results to Sauce Jobs
@@ -29,11 +28,11 @@ To summarise, in order to make the most use out of the Sauce Bamboo plugin, the 
 Referencing Job Configuration
 ---
 
-As mentioned previously, the Sauce Bamboo plugin will set a series of environment variables that reflect the values entered on the Bamboo Job Configuration screen.
+As mentioned previously, the Sauce TeamCity plugin will set a series of environment variables that reflect the values entered on the TeamCity Build Feature screen.
 
 Your test code will need to be updated to reference these environment variables.
 
-Below is some sample Java code which demonstrates how to reference the environment variables that are set by the Bamboo plugin
+Below is some sample Java code which demonstrates how to reference the environment variables that are set by the TeamCity plugin
 
 <!-- SAUCE:LOGIN -->
 ```java
@@ -75,5 +74,3 @@ WebDriver webDriver = SeleniumFactory.createWebDriver();
 ```
 
 Implementations of the library exist for [Java](https://github.com/infradna/selenium-client-factory) and [Python](http://sauceio.com/index.php/2012/01/selenium-client-factory-for-python/)
-
-* _Next_: Have a Python project? Check out the [Python job configuration](##04-Python-Job-Configuration.md##) instead.

@@ -1,61 +1,106 @@
-Bamboo Configuration for a Java-based Project
+TeamCity Configuration for a Java-based Project
 =============
 
-To demonstrate the Bamboo plugin for Jenkins, let's create a new Bamboo project for a Java project.
+To demonstrate the Sauce plugin for TeamCity, let's create a new TeamCity project for a Java project.
 
-Click the `Create Plan` link included on the top-right of the header bar.
+To create a new project, first click the `Administration` link on the top-right of the page.
 
-![Create Plan](##create-plan.png##)
+![Administration](##administration.png##)
 
-Click the `Create New Plan` link.
+Click the `Create Project` button.
+
+Enter `Sauce Demo` in the `Name` field, this should populate the `Project ID` field with `SauceDemo`.
+
+Click the `Create` button.
 
 ![Create New Plan](##create-new-plan.png##)
 
-Enter `Sauce Demo` in the `Project` field.
+Click the `VCS Roots` link.
 
-Enter `SAUCE` in the `Project Key` field.
+![VCS Root Link](##vcs-root-link.png##)
 
-Enter `Java` in the `Plan Name` field.
+Click the `Create VCS Root` button.
 
-Enter `DEMO` in the `Plan Key` field.
+![VCS Root Button](##vcs-root-button.png##)
 
-![New Plan Details](##new-plan-details.png##)
+Enter `https://github.com/rossrowe/sauce-ci-java-demo.git` in the `Fetch URL` field.
 
-Select `Git` in the `Source Repository` drop down list.
+Enter `master` in the `Default Branch` field.
 
-Enter `https://github.com/rossrowe/sauce-ci-java-demo` in the `Repository URL` field.
-
-Enter `master` in the `Branch` field
+Click the `Save Button`.
 
 ![Source Repository Details](##plan-git.png##)
 
-Click the `Configure Tasks` button to continue.
+Click the `Create Build Configuration` button.
 
-![Configure Tasks](##configure-tasks.png##)
+![Create Build Configuration](##create-build-configuration.png##)
 
-Click the `Add Task` button.
+Enter `Maven` in the `Name` field
 
-![Add Task](##add-task.png##)
+Click the `VCS Settings` button.
 
-Click the `Maven Task 3.x` link.
+![Build Settings](##build-settings.png##)
 
-![Maven Task](##maven-task.png##)
+Select the `https://github.com/rossrowe/sauce-ci-java-demo.git#master` option within the `attach existing VCS root` drop down list.
 
-Enter `Run Tests` in the `Task Description` field.  Click the `Save` button.
+Click the `Add Build Step` button.
 
-The default values entered should be fine, so click the `Create` button.  We need to enter the Sauce configuration after the plan has been configured, so don't select the `Enable this plan` checkbox just yet.
+![Build Git](##build-git.png##)
 
-Click the `Default Job` link on the left-hand navigation pane.
+Select `Maven` from the `Runner type` drop down list.
 
-![Default Job](##default-job.png##)
+Enter `test` in the `Goals` field.
 
-Click on the `Miscellaneous` tab
+Click the `Save` button.
 
-![Misc tab](##misc-tab.png##)
+![Build Maven](##build-maven.png##)
 
-Select the `Enable Sauce OnDemand` checkbox to enable the plugin.  The `Enable Sauce Connect` checkbox should be selected by default.  When selected, the Sauce plugin will launch an instance of [Sauce Connect](http://saucelabs.com/docs/sauce-connect) prior to the running of your Job.  This instance will be closed when the Job completes.
+Click the `Add Build Feature` button.
 
-Select a browser to run our tests against from the `Browser` drop down list (let's pick Firefox 15 running in Windows 2008)
+![Add Build Feature](##add-build-feature.png##)
+
+Select `Sauce Labs Build Feature` from the drop down list.
+
+![Sauce build feature](##sauce-build-feature.png##)
+
+Enter the values of the username and access key you wish the Sauce plugin to use in the `Sauce User` and `Sauce Access Key` fields.
+
+When the `Enable Sauce Connect` checkbox is selected, the Sauce plugin will launch an instance of [Sauce Connect](http://saucelabs.com/docs/sauce-connect) prior to the running of your Job.  This instance will be closed when the Job completes.
+
+If a single browser is selected, then the `SELENIUM_PLATFORM`, `SELENIUM_VERSION`, `SELENIUM_BROWSER` and `SELENIUM_DRIVER` environment variables will be populated to contain the details of the selected browser.  If multiple browsers are selected, then the `SELENIUM_BROWSER` environment variable will be populated with a JSON-formatted string containing the attributes of the selected browsers.  An example of the JSON string is:
+
+```json
+
+[
+	{
+	"platform":"LINUX",
+	"os":"Linux",
+	"browser":"firefox",
+	"url":"sauce-ondemand:?os=Linux&browser=firefox&browser-version=16",
+	"browser-version":"16"
+	},
+	{
+	"platform":"VISTA",
+	"os":"Windows 2008",
+	"browser":"iexploreproxy",
+	"url":"sauce-ondemand:?os=Windows 2008&browser=iexploreproxy&browser-version=9",
+	"browser-version":"9"
+	}
+]
+```
+
+The plugin will set a series of environment variables based on the information provided on the Job Configuration. These environment variables can either be explicitly referenced by your unit tests, or through the use of the [selenium-client-factory](https://github.com/infradna/selenium-client-factory) library.
+
+* `SELENIUM_HOST` - The hostname of the Selenium server
+* `SELENIUM_PORT` - The port of the Selenium server
+* `SELENIUM_PLATFORM` - The operating system of the selected browser
+* `SELENIUM_VERSION` - The version number of the selected browser
+* `SELENIUM_BROWSER` - The browser name of the selected browser.
+* `SELENIUM_DRIVER` - Contains the operating system, version and browser name of the selected browser, in a format designed for use by the [Selenium Client Factory]()
+* `SAUCE_ONDEMAND_BROWSERS` - A JSON-formatted string representing the selected browsers
+* `SELENIUM_URL` - The initial URL to load when the test begins
+* `SAUCE_USER_NAME` - The user name used to invoke Sauce OnDemand
+* `SAUCE_API_KEY` - The access key for the user used to invoke Sauce OnDemand
 
 ![Sauce options](##sauce-options.png##)
 
