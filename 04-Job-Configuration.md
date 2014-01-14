@@ -13,7 +13,7 @@ Enter `Sauce Demo` in the `Name` field, this should populate the `Project ID` fi
 
 Click the `Create` button.
 
-![Create New Plan](##create-new-plan.png##)
+![Create New Plan](##create-new-project.png##)
 
 Click the `VCS Roots` link.
 
