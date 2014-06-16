@@ -1,3 +1,4 @@
+# This repo is deprecated, this tutorial now resides [here](https://github.com/saucelabs/docs/blob/master/markdown/ci-integrations/teamcity.md).
 Sauce Labs + TeamCity Tutorial
 ====
 
